@@ -1,13 +1,10 @@
----
-title: 'Coursera- Reproducible Research: Project 1 - An analysis of activity data'
-author: "JRB"
-date: "June 25, 2016"
-output: html_document
----
+# Coursera- Reproducible Research: Project 1 - An analysis of activity data
+JRB  
+June 25, 2016  
 
 
 
-
+  
 ##Loading and preprocessing the data 
 
 ```r
@@ -33,10 +30,10 @@ total loaded observations ``17568``
          col="blue")
 ```
 
-![plot of chunk aggregate steps per day and produce histogram for total steps per day](figure/aggregate steps per day and produce histogram for total steps per day-1.png)
+![](PA1_template_files/figure-html/aggregate steps per day and produce histogram for total steps per day-1.png)<!-- -->
 
 The mean (ignoring missing values) number of steps taken each days is
-``10766`` and the median is ``10765``. 
+``10766.19`` and the median is ``10765``. 
   
 ***
   
@@ -54,7 +51,7 @@ plot(steps.by.interval,
 abline(v=steps.by.interval[which.max(steps.by.interval$steps),]$interval,col="red",lwd=3)
 ```
 
-![plot of chunk timeseries of the average number of steps by interval](figure/timeseries of the average number of steps by interval-1.png)
+![](PA1_template_files/figure-html/timeseries of the average number of steps by interval-1.png)<!-- -->
   
 The interval ``835`` (red line in graph) is,on average, the interval with the most steps across all days.
   
@@ -88,14 +85,14 @@ The interval ``835`` (red line in graph) is,on average, the interval with the mo
          col="blue")
 ```
 
-![plot of chunk hitsogram for total steps by day once the missing data has been filler](figure/hitsogram for total steps by day once the missing data has been filler-1.png)
+![](PA1_template_files/figure-html/hitsogram for total steps by day once the missing data has been filler-1.png)<!-- -->
   
-The mean is ``10766.2`` and the median is ``10766.2``   
+The mean is ``10766.19`` and the median is ``10766.19``   
 
 The mean of steps  of the original data set is
-``10766.2`` ,
+``10766.19`` ,
 the mean of the imputed data set is
-``10766``,
+``10766.19``,
 which is the same...  
   
 ***
@@ -103,20 +100,20 @@ which is the same...
 ##Are there differences in activity patterns between weekdays and weekends ?
 
 ```r
-    activity.imp.mean$daytype <- weekdays(as.Date.factor(activity.imp.mean$date),TRUE)
-    activity.imp.mean[activity.imp.mean$daytype %in% c("Sat","Sun"),]$daytype <- "weekend"
+    activity.imp.mean$daytype <- weekdays(as.Date.factor(activity.imp.mean$date),TRUE) #add the new variable daytype
+    activity.imp.mean[activity.imp.mean$daytype %in% c("Sat","Sun"),]$daytype <- "weekend" 
     activity.imp.mean[activity.imp.mean$daytype != "weekend",]$daytype <- "weekday"
-    activity.imp.mean$daytype <- as.factor(activity.imp.mean$daytype)
+    activity.imp.mean$daytype <- as.factor(activity.imp.mean$daytype) #transform daytype to factor
     steps.by.interval.daytype <- aggregate(data=activity.imp.mean,
-                                           steps ~ daytype+interval,mean)
+                                           steps ~ daytype+interval,mean) #calculate the mean across intervals and daytype
     myplot <- ggplot(data=steps.by.interval.daytype,
                      aes(x=interval,
                          y=steps,
-                         color=daytype))
-    myplot <- myplot + geom_line() + facet_grid(daytype~.)
-    print(myplot)
+                         color=daytype)) #setup the plot data and aesthetic
+    myplot <- myplot + geom_line() + facet_grid(daytype~.) + guides(color=FALSE) #adds the geometry, create the panels and adjust the legend
+    print(myplot) # Render the plot
 ```
 
-![plot of chunk create a new factor weekday/weekend in variable day type and plot the activity pattern](figure/create a new factor weekday/weekend in variable day type and plot the activity pattern-1.png)
+![](PA1_template_files/figure-html/create a new factor weekday/weekend in variable day type and plot the activity pattern-1.png)<!-- -->
 
 

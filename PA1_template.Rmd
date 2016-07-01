@@ -2,7 +2,9 @@
 title: 'Coursera- Reproducible Research: Project 1 - An analysis of activity data'
 author: "JRB"
 date: "June 25, 2016"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
     if (!require(ggplot2)) {install.packages("ggplot2")
                                 library(ggplot2)}
 ```
-
+  
 ##Loading and preprocessing the data 
 ```{r acquiring and loading the activity data}
     #Downloading and unziping the file
@@ -92,25 +94,25 @@ The mean is ```r format(mean(imp.steps.per.day$steps),scientific=FALSE,nsmall=2)
 The mean of steps  of the original data set is
 ```r format(mean(steps.by.day$steps),nsmall=2,scientific=FALSE)``` ,
 the mean of the imputed data set is
-```r format(median(imp.steps.per.day$steps),nsmall=2,scientific=FALSE)```,
+```r format(mean(imp.steps.per.day$steps),nsmall=2,scientific=FALSE)```,
 which is the same...  
   
 ***
   
 ##Are there differences in activity patterns between weekdays and weekends ?
 ```{r create a new factor weekday/weekend in variable day type and plot the activity pattern}
-    activity.imp.mean$daytype <- weekdays(as.Date.factor(activity.imp.mean$date),TRUE)
-    activity.imp.mean[activity.imp.mean$daytype %in% c("Sat","Sun"),]$daytype <- "weekend"
+    activity.imp.mean$daytype <- weekdays(as.Date.factor(activity.imp.mean$date),TRUE) #add the new variable daytype
+    activity.imp.mean[activity.imp.mean$daytype %in% c("Sat","Sun"),]$daytype <- "weekend" 
     activity.imp.mean[activity.imp.mean$daytype != "weekend",]$daytype <- "weekday"
-    activity.imp.mean$daytype <- as.factor(activity.imp.mean$daytype)
+    activity.imp.mean$daytype <- as.factor(activity.imp.mean$daytype) #transform daytype to factor
     steps.by.interval.daytype <- aggregate(data=activity.imp.mean,
-                                           steps ~ daytype+interval,mean)
+                                           steps ~ daytype+interval,mean) #calculate the mean across intervals and daytype
     myplot <- ggplot(data=steps.by.interval.daytype,
                      aes(x=interval,
                          y=steps,
-                         color=daytype))
-    myplot <- myplot + geom_line() + facet_grid(daytype~.)
-    print(myplot)
+                         color=daytype)) #setup the plot data and aesthetic
+    myplot <- myplot + geom_line() + facet_grid(daytype~.) + guides(color=FALSE) #adds the geometry, create the panels and adjust the legend
+    print(myplot) # Render the plot
 ```
 
 
