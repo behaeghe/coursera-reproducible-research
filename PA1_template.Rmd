@@ -40,7 +40,7 @@ total loaded observations ```r nrow(activity)```
 ```
 
 The mean (ignoring missing values) number of steps taken each days is
-```r format(mean(steps.by.day$steps,na.rm=TRUE),digits=2,scientific=FALSE)``` and the median is ```r format(median(steps.by.day$steps, na.rm= TRUE),digits=2)```. 
+```r format(mean(steps.by.day$steps,na.rm=TRUE),nsmall=2,scientific=FALSE)``` and the median is ```r format(median(steps.by.day$steps, na.rm= TRUE),nsmall=2)```. 
   
 ***
   
@@ -87,12 +87,12 @@ The interval ```r steps.by.interval[which.max(steps.by.interval$steps),]$interva
          col="blue")
 ```
   
-The mean is ```r format(mean(imp.steps.per.day$steps),scientific=FALSE,digits=6) ``` and the median is ```r format(median(imp.steps.per.day$steps),scientific=FALSE,digits=6)```   
+The mean is ```r format(mean(imp.steps.per.day$steps),scientific=FALSE,nsmall=2) ``` and the median is ```r format(median(imp.steps.per.day$steps),scientific=FALSE,nsmall=2)```   
 
 The mean of steps  of the original data set is
-```r format(mean(steps.by.day$steps),,digits=6,scientific=FALSE)``` ,
+```r format(mean(steps.by.day$steps),nsmall=2,scientific=FALSE)``` ,
 the mean of the imputed data set is
-```r format(median(imp.steps.per.day$steps),digits=3,scientific=FALSE)```,
+```r format(median(imp.steps.per.day$steps),nsmall=2,scientific=FALSE)```,
 which is the same...  
   
 ***
